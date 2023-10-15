@@ -1,4 +1,5 @@
 # Libraries
+from numpy import mean
 import pandas as pd
 
 """
@@ -79,3 +80,30 @@ df = pd.DataFrame(
     }
 )
 print(df)
+
+# Accessing 1st column by index
+print(df.iloc[:, 1])
+
+# Accessing 1st column by name
+print(df.loc[:, "Age"])
+
+
+"""
+Vectorized Operations
+"""
+# List vs Pandas Series
+list = [1, 2, 3, 4, 5]
+print(list/2)  # This will throw an error
+
+ps = pd.Series(list)
+print(ps/2)
+
+# Panda DataFrame
+df = pd.DataFrame(
+    {
+        "Revenue": [500, 600, 550, 450],
+        "Cost": [23, 21, 22, 24]
+    }
+)
+print(df/2)
+print(df["Revenue"] - df["Cost"])

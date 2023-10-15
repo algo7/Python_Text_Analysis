@@ -9,7 +9,7 @@ from nltk.corpus import stopwords
 nltk.download('punkt')
 nltk.download('stopwords')
 
-# Read the data from a csv file
+# Read the data from a csv file into a pandas dataframe
 data = pd.read_csv(
     'https://raw.githubusercontent.com/algo7/Python_Text_Analysis/main/Data/Hotel_Alexander.csv')
 
@@ -32,3 +32,8 @@ data.info()
 """
 Data Preprocessing
 """
+# Extract the review content into a pandas series
+reviews = data['content']
+
+# Convert all reviews to lowercase
+reviews = reviews.str.lower()
