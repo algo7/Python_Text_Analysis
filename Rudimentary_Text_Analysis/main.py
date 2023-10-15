@@ -34,6 +34,20 @@ Data Preprocessing
 """
 # Extract the review content into a pandas series
 reviews = data['content']
+print(reviews)
+print(type(reviews))
 
 # Convert all reviews to lowercase
 reviews = reviews.str.lower()
+print(reviews)
+
+# Tokenize the reviews
+reviews = reviews.apply(wt)
+print(reviews)
+
+# Remove stopwords
+sw = stopwords.words('english')
+
+
+# reviews = reviews.apply(remove_stopwords)
+# print(reviews)
