@@ -59,7 +59,7 @@ sws = set(stopwords.words('english'))
 
 # Custom stopwords list
 custom_sws = {'hotel', 'room', 'rooms', 'staff',
-              'stay', 'stayed', 'night', 'alexander'}
+              'stay', 'stayed', 'night', 'alexander', 'lausanne', 'beau-rivage', 'beau', 'rivage', 'zurich'}
 all_sws = sws.union(custom_sws)
 
 # Define a function to remove stopwords
