@@ -37,6 +37,9 @@ reviews = data['content']
 print(reviews)
 print(type(reviews))
 
+"""
+Stage 1: Tokenization and Normalization
+"""
 # Convert all reviews to lowercase
 reviews = reviews.str.lower()
 print(reviews)
@@ -45,9 +48,47 @@ print(reviews)
 reviews = reviews.apply(wt)
 print(reviews)
 
+"""
+Stage 2 : Stopwords and Punctuation Removal
+"""
 # Remove stopwords
-sw = set(stopwords.words('english'))
+sws = set(stopwords.words('english'))
+
+# Define a function to remove stopwords
 
 
-# reviews = reviews.apply(remove_stopwords)
-# print(reviews)
+def remove_stopwords(tokens):
+    return [token for token in tokens if token not in sws]
+
+
+reviews = reviews.apply(remove_stopwords)
+print(reviews)
+
+# Remove punctuation and non-alphabetic characters
+
+# Define a function to remove punctuation and non-alphabetic characters
+
+
+def remove_punctuation(tokens):
+    return [token for token in tokens if token.isalpha()]
+
+
+# Apply the function to the reviews
+reviews = reviews.apply(remove_punctuation)
+print(reviews)
+
+
+"""
+Stage 3 : Stemming
+"""
+# Define a function to stem tokens
+
+
+def stem_tokens(tokens):
+    stemmer = snowball.SnowballStemmer('english')
+    return [stemmer.stem(token) for token in tokens]
+
+# Apply the function to the reviews
+reviews = reviews.apply(stem_tokens)
+
+print(reviews)
