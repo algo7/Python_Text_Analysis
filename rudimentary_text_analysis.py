@@ -88,7 +88,7 @@ reviews_all = reviews.sum()
 freq_dist = nltk.FreqDist(reviews_all)
 
 # Plot the frequency distribution
-max = 10
+max = 20
 freq_dist_plot = freq_dist.plot(max, title=(f"Top {max} Most Frequent Words"))
 
 # Using bar plot
@@ -114,23 +114,24 @@ wordcloud.to_file('wordcloud.png')
 
 
 # Generate wc from dtm
-# Convert dtm to a dictionary
-dtmd = dict(dtm.values.tolist())
-wcdtm = wc.WordCloud().generate_from_frequencies(dtmd)
-wcdtm.to_image()
+# Convert dtm to a dictionary# Print each element in nums
+for num in nums:
+    print(num)
 
-"""
-Bigrams and Trigrams
-"""
-# Find bi/trigrams
+# For loop with range (right exclusive)
+# Print each number from 1 to 10
+for index in range(1, 11):
+    print(index)
+
 triGramsFinder = nltk.TrigramCollocationFinder.from_words(reviews_all)
-biGramsFinder = nltk.TrigramCollocationFinder.from_words(reviews_all)
+biGramsFinder = nltk.BigramCollocationFinder.from_words(reviews_all)
 
 # Get the 10 most common bigrams
 top_bigrams = biGramsFinder.ngram_fd.most_common(10)
 top_trigrams = triGramsFinder.ngram_fd.most_common(10)
 
 # Extracting bigram names and their respective frequencies
+# [Expression for item in iteratble condition]
 bigram_names = [str(bigram[0]) for bigram in top_bigrams]
 bigram_freqs = [bigram[1] for bigram in top_bigrams]
 

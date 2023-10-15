@@ -1,5 +1,4 @@
 # Libraries
-from numpy import mean
 import pandas as pd
 
 """
@@ -49,8 +48,8 @@ Control Flow
 # If-Else
 # Check if x is greater than 5
 x = 5
-if x > 5:
-    print("x is greater than 5")
+if x > 3:
+    print("x is greater than 3")
 
 # Check if num is in nums
 num = 10
@@ -96,9 +95,9 @@ df = pd.DataFrame(
 print(df)
 
 # Accessing 1st column by index
-print(df.iloc[:, 1])
+print(df.iloc[:, 0])
 
-# Accessing 1st column by name
+# Accessing 2nd column by name
 print(df.loc[:, "Age"])
 
 

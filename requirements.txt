@@ -1,0 +1,8 @@
+wordcloud
+pandas
+nltk
+matplotlib
+gensim
+nrclex
+seaborn
+pyLDAvis
