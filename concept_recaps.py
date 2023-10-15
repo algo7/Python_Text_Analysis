@@ -67,6 +67,44 @@ for num in nums:
 for index in range(1, 11):
     print(index)
 
+# List comprehension
+# Create a list of even numbers from 1 to 10
+"""
+Syntax: [expression for item in iterable if condition]
+Syntax Nested: [expression for outer_loop_variable in outer_iterable for inner_loop_variable in inner_iterable]
+"""
+# Example 1
+# Without list comprehension
+numbers = [1, 2, 3, 4, 5]
+doubled = []
+for num in numbers:
+    doubled.append(num * 2)
+print(doubled)  # Output: [2, 4, 6, 8, 10]
+
+# With list comprehension
+numbers = [1, 2, 3, 4, 5]
+doubled = [num * 2 for num in numbers]
+print(doubled)  # Output: [2, 4, 6, 8, 10]
+
+# Example 2
+# Without list comprehension
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+doubled_matrix = []
+
+for row in matrix:
+    doubled_row = []
+    for num in row:
+        doubled_row.append(num * 2)
+    doubled_matrix.append(doubled_row)
+
+print(doubled_matrix)
+# Output: [[2, 4, 6], [8, 10, 12], [14, 16, 18]]
+
+# With list comprehension
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+doubled_matrix = [[num * 2 for num in row] for row in matrix]
+print(doubled_matrix)
 
 """
 Pandas Data Structures
