@@ -5,6 +5,7 @@ import nltk
 from nltk.stem import snowball
 from nltk.tokenize import word_tokenize as wt
 from nltk.corpus import stopwords
+import matplotlib.pyplot as plt
 
 # Download nltk components
 nltk.download('punkt')
@@ -77,6 +78,9 @@ def remove_punctuation(tokens):
 reviews = reviews.apply(remove_punctuation)
 
 
+"""
+Visualization and Wordcloud
+"""
 # Combine all tokens into a single list
 reviews_all = reviews.sum()
 
@@ -116,6 +120,46 @@ wcdtm = wc.WordCloud().generate_from_frequencies(dtmd)
 wcdtm.to_image()
 
 """
+Bigrams and Trigrams
+"""
+# Find bi/trigrams
+triGramsFinder = nltk.TrigramCollocationFinder.from_words(reviews_all)
+biGramsFinder = nltk.TrigramCollocationFinder.from_words(reviews_all)
+
+# Get the 10 most common bigrams
+top_bigrams = biGramsFinder.ngram_fd.most_common(10)
+top_trigrams = triGramsFinder.ngram_fd.most_common(10)
+
+# Extracting bigram names and their respective frequencies
+bigram_names = [str(bigram[0]) for bigram in top_bigrams]
+bigram_freqs = [bigram[1] for bigram in top_bigrams]
+
+# Extracting trigram names and their respective frequencies
+trigram_names = [str(trigram[0]) for trigram in top_trigrams]
+trigram_freqs = [trigram[1] for trigram in top_trigrams]
+
+# Plotting
+plt.figure(figsize=(12, 8))
+
+# Bigram subplot
+plt.subplot(1, 2, 1)  # 1 row, 2 columns, subplot 1
+plt.barh(bigram_names, bigram_freqs, color='skyblue')
+plt.xlabel('Frequency')
+plt.ylabel('Bigrams')
+plt.title('Top 10 Most Frequent Bigrams in Reviews')
+plt.gca().invert_yaxis()
+
+# Trigram subplot
+plt.subplot(1, 2, 2)  # 1 row, 2 columns, subplot 2
+plt.barh(trigram_names, trigram_freqs, color='salmon')
+plt.xlabel('Frequency')
+plt.ylabel('Trigrams')
+plt.title('Top 10 Most Frequent Trigrams in Reviews')
+plt.gca().invert_yaxis()
+
+plt.tight_layout(pad=5.0)  # To ensure that the subplots do not overlap
+
+"""
 Stage 3 : Stemming
 """
 # Define a function to stem tokens
@@ -128,3 +172,5 @@ def stem_tokens(tokens):
 
 # Apply the function to the reviews
 reviews = reviews.apply(stem_tokens)
+
+rs = reviews.sum()
