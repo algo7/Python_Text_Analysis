@@ -10,7 +10,8 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 # Read the data from a csv file
-data = pd.read_csv('https://raw.githubusercontent.com/algo7/Python_Text_Analysis/main/Data/Hotel_Alexander.csv')
+data = pd.read_csv(
+    'https://raw.githubusercontent.com/algo7/Python_Text_Analysis/main/Data/Hotel_Alexander.csv')
 
 """
 Data Exploration
