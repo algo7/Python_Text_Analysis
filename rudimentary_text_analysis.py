@@ -58,8 +58,9 @@ Stage 2 : Stopwords and Punctuation Removal
 sws = set(stopwords.words('english'))
 
 # Custom stopwords list
-# custom_sws = {'hotel', 'room', 'rooms', 'staff', 'stay', 'stayed', 'night', }
-# all_sws = sws.union(custom_sws)
+custom_sws = {'hotel', 'room', 'rooms', 'staff',
+              'stay', 'stayed', 'night', 'alexander'}
+all_sws = sws.union(custom_sws)
 
 # Define a function to remove stopwords
 
@@ -68,7 +69,7 @@ def remove_stopwords(tokens, sw_list):
     return [token for token in tokens if token not in sw_list]
 
 
-reviews = reviews.apply(remove_stopwords, args=(sws,))
+reviews = reviews.apply(remove_stopwords, args=(all_sws,))
 
 # Remove punctuation and non-alphabetic characters
 
@@ -171,13 +172,13 @@ Stage 3 : Stemming (Optional)
 # Define a function to stem tokens
 
 
-def stem_tokens(tokens):
-    stemmer = snowball.SnowballStemmer('english')
-    return [stemmer.stem(token) for token in tokens]
+# def stem_tokens(tokens):
+#     stemmer = snowball.SnowballStemmer('english')
+#     return [stemmer.stem(token) for token in tokens]
 
 
-# Apply the function to the reviews
-reviews = reviews.apply(stem_tokens)
+# # Apply the function to the reviews
+# reviews = reviews.apply(stem_tokens)
 
 
 """
