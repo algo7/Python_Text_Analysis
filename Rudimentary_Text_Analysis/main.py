@@ -15,15 +15,19 @@ data = pd.read_csv('https://raw.githubusercontent.com/algo7/Python_Text_Analysis
 """
 Data Exploration
 """
-## Print the column names
+# Print the column names
 data.columns
 
-## List the first 5 rows
+# List the first 5 rows
 data.head(n=5)
 
-## Print the shape/dimension of the data
+# Print the shape/dimension of the data
 data.shape
 
-## Get basic information about the data
+# Get basic information about the data
 data.info()
 
+
+"""
+Data Preprocessing
+"""
