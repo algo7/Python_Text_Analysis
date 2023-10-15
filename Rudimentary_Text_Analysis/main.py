@@ -12,7 +12,9 @@ nltk.download('stopwords')
 # Read the data from a csv file
 data = pd.read_csv('https://raw.githubusercontent.com/algo7/Python_Text_Analysis/main/Data/Hotel_Alexander.csv')
 
-# Explore the data
+"""
+Data Exploration
+"""
 ## Print the column names
 data.columns
 
