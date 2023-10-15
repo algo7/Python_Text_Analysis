@@ -159,8 +159,9 @@ plt.gca().invert_yaxis()
 
 plt.tight_layout(pad=5.0)  # To ensure that the subplots do not overlap
 
+
 """
-Stage 3 : Stemming
+Stage 3 : Stemming (Optional)
 """
 # Define a function to stem tokens
 
@@ -173,4 +174,15 @@ def stem_tokens(tokens):
 # Apply the function to the reviews
 reviews = reviews.apply(stem_tokens)
 
-rs = reviews.sum()
+
+"""
+Exporting Pre-processed Data
+"""
+pd.DataFrame(reviews)
+
+# Joining the tokens back into strings
+reviews_joined = reviews.apply(' '.join)
+
+# Save the preprocessed reviews to a CSV
+reviews_joined.to_csv('preprocessed_reviews.csv',
+                      index=False, header=["review"])
