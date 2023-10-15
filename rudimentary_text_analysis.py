@@ -54,16 +54,21 @@ reviews = reviews.apply(wt)
 Stage 2 : Stopwords and Punctuation Removal
 """
 # Remove stopwords
+# Stopwords list
 sws = set(stopwords.words('english'))
+
+# Custom stopwords list
+# custom_sws = {'hotel', 'room', 'rooms', 'staff', 'stay', 'stayed', 'night', }
+# all_sws = sws.union(custom_sws)
 
 # Define a function to remove stopwords
 
 
-def remove_stopwords(tokens):
-    return [token for token in tokens if token not in sws]
+def remove_stopwords(tokens, sw_list):
+    return [token for token in tokens if token not in sw_list]
 
 
-reviews = reviews.apply(remove_stopwords)
+reviews = reviews.apply(remove_stopwords, args=(sws,))
 
 # Remove punctuation and non-alphabetic characters
 
