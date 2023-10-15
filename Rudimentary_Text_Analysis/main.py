@@ -46,7 +46,7 @@ reviews = reviews.apply(wt)
 print(reviews)
 
 # Remove stopwords
-sw = stopwords.words('english')
+sw = set(stopwords.words('english'))
 
 
 # reviews = reviews.apply(remove_stopwords)

@@ -30,10 +30,13 @@ dictionary["Jun"] = 30
 print(dictionary)
 
 # Set
-# Create a set
 set = {"Jan", "Feb", "Mar", "Apr", "May"}
 set.add("Dec")
 print(set)
+
+set.add("Jan")  # This will not add Jan to the set
+print(set)
+
 # print(set[0]) # This will throw an error
 
 # Check for membership
