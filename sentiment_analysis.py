@@ -96,12 +96,30 @@ plt.xticks(rotation=45)
 plt.show()
 
 
+# Topic Modeling
+# Latent Dirichlet Allocation (LDA)
+# This creates a mapping from words to their integer IDs
 dictionary = Dictionary(reviews)
-corpus = [dictionary.doc2bow(review)
-          for review in reviews]
 
-lda_model = LdaModel(corpus=corpus, id2word=dictionary, num_topics=5,
-                     random_state=42, passes=15, per_word_topics=True)
+# creates a "bag-of-words" representation for a review. It returns a list of (word_id, word_frequency) tuples.
+corpus = [dictionary.doc2bow(review) for review in reviews]
+
+lda_model = LdaModel(
+    # The bag-of-words representation of the reviews.
+    corpus=corpus,
+    # A mapping from word IDs to words, which helps interpret the topics.
+    id2word=dictionary,
+    # The number of topics the model should discover.
+    num_topics=5,
+    # This ensures reproducibility (the seed)
+    random_state=42,
+    # The number of times the algorithm should traverse the corpus
+    passes=15,
+    # Per-word topic assignments should be computed, not just per-document topic distributions
+    per_word_topics=True
+)
+
+# Print the topics. -1 - all topics will be in result
 for idx, topic in lda_model.print_topics(-1):
     print(f"Topic: {idx} \nWords: {topic}\n")
 
@@ -111,25 +129,3 @@ lda_vis = gensimvis.prepare(lda_model, corpus, dictionary)
 
 # Display the visualization
 pyLDAvis.display(lda_vis)
-
-
-def plot_top_words(lda_model, topic_num, top_n=10):
-    """
-    Plot the top `top_n` words from a given topic number `topic_num`
-    from the LDA model `lda_model`.
-    """
-    terms = lda_model.show_topic(topic_num, topn=top_n)
-    term_names = [term[0] for term in terms]
-    term_weights = [term[1] for term in terms]
-
-    fig, ax = plt.subplots(figsize=(8, 6))
-    ax.barh(term_names, term_weights, align='center', color='blue')
-    ax.invert_yaxis()  # display the top word at the top
-    ax.set_xlabel('Weight')
-    ax.set_title(f"Top {top_n} words for topic {topic_num + 1}")
-    plt.show()
-
-
-# Loop over all topics and plot the top words for each topic
-for i in range(lda_model.num_topics):
-    plot_top_words(lda_model, i)
