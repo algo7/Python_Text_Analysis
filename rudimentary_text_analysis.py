@@ -119,15 +119,14 @@ wordcloud.to_file('wordcloud.png')
 
 
 # Generate wc from dtm
-# Convert dtm to a dictionary# Print each element in nums
-for num in nums:
-    print(num)
+# Convert dtm to a dictionary
+dtmd = dict(dtm.values.tolist())
+wcdtm = wc.WordCloud().generate_from_frequencies(dtmd)
+wcdtm.to_image()
 
-# For loop with range (right exclusive)
-# Print each number from 1 to 10
-for index in range(1, 11):
-    print(index)
-
+"""
+Bigrams and Trigrams
+"""
 triGramsFinder = nltk.TrigramCollocationFinder.from_words(reviews_all)
 biGramsFinder = nltk.BigramCollocationFinder.from_words(reviews_all)
 
