@@ -1,4 +1,5 @@
 # Libraries
+import wordcloud as wc
 import pandas as pd
 import nltk
 from nltk.stem import snowball
@@ -34,7 +35,7 @@ Data Preprocessing
 """
 # Extract the review content into a pandas series
 reviews = data['content']
-print(reviews)
+
 print(type(reviews))
 
 """
@@ -42,11 +43,11 @@ Stage 1: Tokenization and Normalization
 """
 # Convert all reviews to lowercase
 reviews = reviews.str.lower()
-print(reviews)
+
 
 # Tokenize the reviews
 reviews = reviews.apply(wt)
-print(reviews)
+
 
 """
 Stage 2 : Stopwords and Punctuation Removal
@@ -62,7 +63,6 @@ def remove_stopwords(tokens):
 
 
 reviews = reviews.apply(remove_stopwords)
-print(reviews)
 
 # Remove punctuation and non-alphabetic characters
 
@@ -75,8 +75,45 @@ def remove_punctuation(tokens):
 
 # Apply the function to the reviews
 reviews = reviews.apply(remove_punctuation)
-print(reviews)
 
+
+# Combine all tokens into a single list
+reviews_all = reviews.sum()
+
+# Create word frequency distribution
+freq_dist = nltk.FreqDist(reviews_all)
+
+# Plot the frequency distribution
+max = 10
+freq_dist_plot = freq_dist.plot(max, title=(f"Top {max} Most Frequent Words"))
+
+# Using bar plot
+# Create document term matrix
+dtm = pd.DataFrame(
+    freq_dist.most_common(max),
+    columns=['Word', 'Frequency']
+)
+
+dtm.plot.bar(x='Word', y='Frequency', title=(f"Top {max} Most Frequent Words"))
+
+# Wordcloud circle
+wordcloud = wc.WordCloud(
+    width=800,
+    height=400,
+    background_color='white'
+).generate_from_frequencies(freq_dist)
+
+wordcloud.to_image()
+
+# Save the wordcloud as an image
+wordcloud.to_file('wordcloud.png')
+
+
+# Generate wc from dtm
+# Convert dtm to a dictionary
+dtmd = dict(dtm.values.tolist())
+wcdtm = wc.WordCloud().generate_from_frequencies(dtmd)
+wcdtm.to_image()
 
 """
 Stage 3 : Stemming
@@ -88,7 +125,6 @@ def stem_tokens(tokens):
     stemmer = snowball.SnowballStemmer('english')
     return [stemmer.stem(token) for token in tokens]
 
+
 # Apply the function to the reviews
 reviews = reviews.apply(stem_tokens)
-
-print(reviews)
