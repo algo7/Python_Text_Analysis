@@ -24,8 +24,9 @@ reviews = sample_review.apply(wt)
 
 def extract_adj_adv(tokens):
     pos_tags = nltk.pos_tag(tokens)
-    adjectives_adverbs = [word for word, tag in pos_tags if tag in (
-        'JJ', 'JJR', 'JJS', 'RB', 'RBR', 'RBS')]
+    adjectives_adverbs = [
+        word for word, tag in pos_tags if tag in ('JJ', 'JJR', 'JJS', 'RB', 'RBR', 'RBS')
+    ]
     """"
     JJ: Adjective (e.g., "happy")
 
@@ -46,27 +47,27 @@ def extract_adj_adv(tokens):
 reviews_adj_adv = reviews.apply(extract_adj_adv)
 
 
-# Define a function to perform emotion analysis
+# Define a function to perform sentiment analysis
 def analyze_emotion(words_list):
     text = ' '.join(words_list)
     text_object = NRCLex(text)
     return text_object.affect_frequencies
 
 
-# Apply the function to analyze emotions
-emotions = reviews_adj_adv.apply(analyze_emotion)
+# Apply the function to analyze sentiments
+sentiments = reviews_adj_adv.apply(analyze_emotion)
 
 # Convert the Series of dictionaries into a DataFrame
-emotions_df = emotions.apply(pd.Series)
+emotions_df = sentiments.apply(pd.Series)
 
 # You might want to concatenate this DataFrame with your original reviews for comprehensive data.
 final_data = pd.concat([preprocessed_reviews, emotions_df], axis=1)
 
 
 # Choose a specific review (the 1st one in this case)
-specific_emotion = emotions.iloc[0]
+specific_emotion = sentiments.iloc[0]
 
-# Plot the emotion frequencies for the specific review
+# Plot the sentiment frequencies for the specific review
 sns.barplot(x=list(specific_emotion.keys()), y=list(specific_emotion.values()))
 plt.title("Emotion Distribution for a Specific Review")
 plt.ylabel("Frequency")
@@ -83,10 +84,10 @@ plt.xticks(rotation=45)
 plt.show()
 
 
-# Calculate the mean frequency for each emotion across all reviews
+# Calculate the mean frequency for each sentiment across all reviews
 emotion_means = emotions_df.mean()
 
-# Plot the average emotion frequencies across all reviews
+# Plot the average sentiment frequencies across all reviews
 plt.figure(figsize=(10, 6))
 sns.barplot(x=emotion_means.index, y=emotion_means.values)
 plt.title("Average Emotion Distributions Across All Reviews")
