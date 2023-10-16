@@ -79,10 +79,10 @@ final_data.to_csv('final_data.csv', index=False)
 Visualization
 """
 # Choose a specific review (the 1st one in this case)
-specific_emotion = sentiments.iloc[0]
+specific_rev = sentiments.iloc[0]
 
 # Plot the sentiment frequencies for the specific review
-sns.barplot(x=list(specific_emotion.keys()), y=list(specific_emotion.values()))
+sns.barplot(x=list(specific_rev.keys()), y=list(specific_rev.values()))
 plt.title("Emotion Distribution for a Specific Review")
 plt.ylabel("Frequency")
 plt.xticks(rotation=45)
@@ -139,7 +139,7 @@ lda_model = LdaModel(
     # The number of times the algorithm should traverse the corpus
     passes=15,
     # Per-word topic assignments should be computed, not just per-document topic distributions
-    per_word_topics=True
+    per_word_topics=False
 )
 
 # Print the topics. -1 - all topics will be in result
@@ -152,3 +152,60 @@ lda_vis = gensimvis.prepare(lda_model, corpus, dictionary)
 
 # Display the visualization
 pyLDAvis.display(lda_vis)
+
+
+# Filter reviews that are more than 50% positive
+positive_reviews = preprocessed_reviews[sentiments_df['positive']
+                                        > 0.5]['review']
+
+# Filter reviews that are more than 50% negative
+negative_reviews = preprocessed_reviews[sentiments_df['negative']
+                                        > 0.5]['review']
+
+# Tokenize the positive reviews
+tokenized_positive_reviews = positive_reviews.apply(wt)
+
+# Tokenize the negative reviews
+tokenized_negative_reviews = negative_reviews.apply(wt)
+
+
+# Create dictionary and corpus for positive reviews
+dictionary_positive = Dictionary(tokenized_positive_reviews)
+corpus_positive = [dictionary_positive.doc2bow(
+    review) for review in tokenized_positive_reviews]
+
+# Create dictionary and corpus for negative reviews
+dictionary_negative = Dictionary(tokenized_negative_reviews)
+corpus_negative = [dictionary_negative.doc2bow(
+    review) for review in tokenized_negative_reviews]
+
+# Run LDA on positive reviews
+lda_model_positive = LdaModel(
+    corpus=corpus_positive,
+    id2word=dictionary_positive,
+    num_topics=5,
+    random_state=42,
+    passes=15,
+    per_word_topics=False
+)
+
+# Run LDA on negative reviews
+lda_model_negative = LdaModel(
+    corpus=corpus_negative,
+    id2word=dictionary_negative,
+    num_topics=5,
+    random_state=42,
+    passes=15,
+    per_word_topics=False
+)
+
+# Prepare the LDA model visualization
+p_lda_vis = gensimvis.prepare(
+    lda_model_positive, corpus_positive, dictionary_positive)
+
+n_lda_vis = gensimvis.prepare(
+    lda_model_negative, corpus_negative, dictionary_negative)
+
+# Display the visualization
+pyLDAvis.display(p_lda_vis)
+pyLDAvis.display(n_lda_vis)
