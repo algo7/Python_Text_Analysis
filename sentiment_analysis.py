@@ -66,10 +66,10 @@ sentiments = reviews_adj_adv.apply(analyze_emotion, args=('freq',))
 Saving the data
 """
 # Convert the Series of dictionaries into a DataFrame
-emotions_df = sentiments.apply(pd.Series)
+sentiments_df = sentiments.apply(pd.Series)
 
 # You might want to concatenate this DataFrame with your original reviews for comprehensive data.
-final_data = pd.concat([preprocessed_reviews, emotions_df], axis=1)
+final_data = pd.concat([preprocessed_reviews, sentiments_df], axis=1)
 
 # Write the final data to a csv file
 final_data.to_csv('final_data.csv', index=False)
@@ -98,9 +98,9 @@ From these observations, one could infer that when reviews are written, they oft
 To draw a parallel with the frequency-based analysis: The raw scores reinforce the idea that reviews tend to be polarized, either expressing strong positive sentiments or intense negative emotions. Neutral emotions or emotions with ambiguous valence, like "anticipation", exhibit a broader range of expression, indicating that their presence is more varied across reviews.
 """
 
-# Plot emotions_df as a boxplot
+# Plot sentiments_df as a boxplot
 plt.figure(figsize=(10, 6))
-sns.boxplot(data=emotions_df)
+sns.boxplot(data=sentiments_df)
 plt.title("Distributions of Emotions Across All Reviews")
 plt.ylabel("Frequency")
 plt.xticks(rotation=45)
@@ -108,11 +108,11 @@ plt.show()
 
 
 # Calculate the mean frequency for each sentiment across all reviews
-emotion_means = emotions_df.mean()
+sentiment_means = sentiments_df.mean()
 
 # Plot the average sentiment frequencies across all reviews
 plt.figure(figsize=(10, 6))
-sns.barplot(x=emotion_means.index, y=emotion_means.values)
+sns.barplot(x=sentiment_means.index, y=sentiment_means.values)
 plt.title("Average Emotion Distributions Across All Reviews")
 plt.ylabel("Average Frequency")
 plt.xticks(rotation=45)
