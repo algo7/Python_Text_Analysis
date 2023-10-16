@@ -132,15 +132,19 @@ def tune(corpus, dictionary, alpha_start, alpha_step, eta_start, eta_step, min_t
 
     grid['Validation_Set'] = {}
 
+    # Create a range of numbers of topics to try
     topics_range = range(min_topics, max_topics, 1)
 
     # Alpha parameter
+    # Create a list of alpha parameters with the given start and step size
     alpha = list(np.arange(alpha_start, 1, alpha_step))
+    # Add 'symmetric' and 'asymmetric' to the list of alpha parameters regardless of the step size and start value
     alpha.append('symmetric')
     alpha.append('asymmetric')
 
     # Beta parameter
     eta = list(np.arange(eta_start, 1, eta_step))
+    # Add 'symmetric' to the list of beta parameters regardless of the step size and start value
     eta.append('symmetric')
 
     # Validation sets
