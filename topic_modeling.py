@@ -56,6 +56,9 @@ lda_vis = gensimvis.prepare(lda_model, corpus, dictionary)
 # Display the visualization
 pyLDAvis.display(lda_vis)
 
+# Save the visualization
+pyLDAvis.save_html(lda_vis, 'lda.html')
+
 # Calculate coherence score (c_v only)
 coherence_model_lda = CoherenceModel(
     model=lda_model,
