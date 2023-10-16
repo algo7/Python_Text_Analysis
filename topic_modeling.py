@@ -1,4 +1,5 @@
 # Libraries
+from gensim.models.coherencemodel import CoherenceModel
 import pyLDAvis
 import pyLDAvis.gensim_models as gensimvis
 import pandas as pd
@@ -54,3 +55,14 @@ lda_vis = gensimvis.prepare(lda_model, corpus, dictionary)
 
 # Display the visualization
 pyLDAvis.display(lda_vis)
+
+# Calculate coherence score (c_v only)
+coherence_model_lda = CoherenceModel(
+    model=lda_model,
+    texts=reviews,
+    dictionary=dictionary,
+    coherence='c_v'
+)
+
+coherence_lda = coherence_model_lda.get_coherence()
+print(f"Coherence score: {coherence_lda}")
