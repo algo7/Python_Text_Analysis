@@ -49,22 +49,35 @@ reviews_adj_adv = reviews.apply(extract_adj_adv)
 
 
 # Define a function to perform sentiment analysis
-def analyze_emotion(words_list):
+def analyze_emotion(words_list, type):
     text = ' '.join(words_list)
     text_object = NRCLex(text)
-    return text_object.affect_frequencies
+    if type == 'raw':
+        return text_object.raw_emotion_scores
+    else:
+        return text_object.affect_frequencies
 
 
 # Apply the function to analyze sentiments
-sentiments = reviews_adj_adv.apply(analyze_emotion)
+sentiments = reviews_adj_adv.apply(analyze_emotion, args=('freq',))
 
+
+"""
+Saving the data
+"""
 # Convert the Series of dictionaries into a DataFrame
 emotions_df = sentiments.apply(pd.Series)
 
 # You might want to concatenate this DataFrame with your original reviews for comprehensive data.
 final_data = pd.concat([preprocessed_reviews, emotions_df], axis=1)
 
+# Write the final data to a csv file
+final_data.to_csv('final_data.csv', index=False)
 
+
+"""
+Visualization
+"""
 # Choose a specific review (the 1st one in this case)
 specific_emotion = sentiments.iloc[0]
 
@@ -75,6 +88,15 @@ plt.ylabel("Frequency")
 plt.xticks(rotation=45)
 plt.show()
 
+"""
+Note:
+Emotions like "joy" and "positive" have higher median frequencies, suggesting these emotions are more commonly expressed across reviews.
+Emotions such as "fear" and "anger" show a lot of outliers towards the lower end, indicating that these emotions might not be frequently expressed in most reviews. However, when they are expressed, it can be in a pronounced manner in some reviews.
+
+From these observations, one could infer that when reviews are written, they often reflect strong positive feelings (e.g., "joy", "positive"). However, strong negative feelings (e.g., "fear", "anger") might be less consistently expressed, but when they do appear, they can be quite pronounced.
+
+To draw a parallel with the frequency-based analysis: The raw scores reinforce the idea that reviews tend to be polarized, either expressing strong positive sentiments or intense negative emotions. Neutral emotions or emotions with ambiguous valence, like "anticipation", exhibit a broader range of expression, indicating that their presence is more varied across reviews.
+"""
 
 # Plot emotions_df as a boxplot
 plt.figure(figsize=(10, 6))
