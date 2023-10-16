@@ -119,8 +119,7 @@ plt.xticks(rotation=45)
 plt.show()
 
 
-
-
+# Topic Modeling base on sentiments
 # Filter reviews that are more than 50% positive
 positive_reviews = preprocessed_reviews[sentiments_df['positive']
                                         > 0.5]['review']
