@@ -5,7 +5,9 @@ import tqdm
 import numpy as np
 import pandas as pd
 
-# Function to compute coherence values
+"""
+This module contains functions for tuning hyperparameters of an LDA model.
+"""
 
 
 def compute_coherence_values(corpus, dictionary, text, k, a, b):
