@@ -26,14 +26,16 @@ corpus = [dictionary.doc2bow(review) for review in reviews]
 lda_model = LdaModel(
     # The bag-of-words representation of the reviews.
     corpus=corpus,
+    alpha='auto',
+    eta='auto',
     # A mapping from word IDs to words, which helps interpret the topics.
     id2word=dictionary,
     # The number of topics the model should discover.
-    num_topics=5,
+    num_topics=3,
     # This ensures reproducibility (the seed)
     random_state=42,
     # The number of times the algorithm should traverse the corpus
-    passes=15,
+    passes=3,
     # Per-word topic assignments should be computed, not just per-document topic distributions
     per_word_topics=False
 )
