@@ -70,7 +70,7 @@ def compute_coherence_values(corpus, dictionary, text, k, a, b):
     return coherence_model_lda.get_coherence()
 
 
-def tune(corpus, dictionary, alpha_start, alpha_step, eta_start, eta_step, min_topics=2, max_topics=5,):
+def tune(corpus, dictionary, alpha_start, alpha_step, eta_start, eta_step, min_topics=2, max_topics=5, validation_set_percentage=0.75):
     """
     Perform a grid search to tune hyperparameters of an LDA model.
 
@@ -98,6 +98,8 @@ def tune(corpus, dictionary, alpha_start, alpha_step, eta_start, eta_step, min_t
         The minimum number of topics to be explored. The default is 2.
     max_topics : int, optional
         The maximum number of topics to be explored. The default is 5.
+    validation_set_percentage : float, optional
+        The percentage of the corpus to be used as a validation set. The default is 0.75.
 
     Notes
     -----
@@ -106,7 +108,7 @@ def tune(corpus, dictionary, alpha_start, alpha_step, eta_start, eta_step, min_t
     - Alpha parameter (a): [alpha_start, 1) with a step size of alpha_step, plus 'symmetric' or 'asymmetric'.
     - Beta parameter (eta): [eta_start, 1) with a step size of eta_step, and 'symmetric'.
 
-    Two validation sets, 75% of the corpus and the full corpus, are used to assess coherence.
+    Two validation sets, validation_set_percentage% of the corpus and the full corpus, are used to assess coherence.
 
     The resulting dataframe containing the coherence scores and the hyperparameter values
     used for each iteration is written to a CSV file named 'lda_tuning_results.csv'.
@@ -143,10 +145,10 @@ def tune(corpus, dictionary, alpha_start, alpha_step, eta_start, eta_step, min_t
 
     # Validation sets
     num_of_docs = len(corpus)
-    corpus_sets = [ClippedCorpus(corpus, int(num_of_docs*0.75)),
+    corpus_sets = [ClippedCorpus(corpus, int(num_of_docs*validation_set_percentage)),
                    corpus]
 
-    corpus_title = ['75% Corpus', '100% Corpus']
+    corpus_title = [f'{validation_set_percentage} Corpus', '100% Corpus']
 
     model_results = {'Validation_Set': [],
                      'Topics': [],
