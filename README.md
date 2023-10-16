@@ -13,3 +13,7 @@ Linux / MacOS:
 ```bash
 source venv/bin/activate
 ```
+
+# Links
+https://general.algo7.tools/requirements.txt
+https://general.algo7.tools/data.txt

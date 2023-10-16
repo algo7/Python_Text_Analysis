@@ -6,3 +6,4 @@ gensim
 nrclex
 seaborn
 pyLDAvis
+numpy
