@@ -6,6 +6,7 @@ from nltk.stem import snowball
 from nltk.tokenize import word_tokenize as wt
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
+import re
 
 # Download nltk components
 nltk.download('punkt')
@@ -45,6 +46,16 @@ Stage 1: Tokenization and Normalization
 # Convert all reviews to lowercase
 reviews = reviews.str.lower()
 
+# Define a function to remove non-Latin characters
+
+
+def remove_non_latin(text):
+    # The regex pattern '[^a-zA-Z\s]' will match all characters that are not a-z, A-Z, or a whitespace character.
+    return re.sub('[^a-zA-Z\s]', '', text)
+
+
+# Apply the function to your reviews
+reviews = reviews.apply(remove_non_latin)
 
 # Tokenize the reviews
 reviews = reviews.apply(wt)
